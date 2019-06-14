@@ -1,1 +1,0 @@
-curl -H "Authorization: 563492ad6f91700001000001d89de49b59c14377bc44c464a20cfe02" "https://api.pexels.com/v1/search?query=dogs&per_page=50&page=2">data.json
