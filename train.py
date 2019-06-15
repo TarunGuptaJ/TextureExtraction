@@ -6,27 +6,32 @@ import numpy as np
 imgs = glob.glob('*.jpeg')
 imgs.extend(glob.glob('*.jpg'))
 
-print(imgs[0])
-print(imgs[1])
 imgarray=[]
 imglabel=[]
 
 for i in imgs: 
-    img=cv.imread(i,0).reshape(120000,1)
+    img=cv.imread(i,0).reshape(120000,)
+    img=np.float32(img)
+    img=img/255
     imgarray.append(img)
     imglabel.append(ord(i[0])-99)
 
-imgtrain=imgarray[:161]
-imgtrainlabel=imglabel[:161]
+f=open("imgarray.txt",'w')
+print(imgarray,file=f)
+f.close()
 
-imgtest=imgarray[161:]
-imgtestlabel=imglabel[161:]
+imgtrain=np.asarray(imgarray[:161])
+imgtrainlabel=np.asarray(imglabel[:161])
 
+imgtest=np.asarray(imgarray[161:])
+imgtestlabel=np.asarray(imglabel[161:])
 
-svm = cv.ml.SVM_create()
-svm.setKernel(cv.ml.SVM_LINEAR)
-svm.setType(cv.ml.SVM_C_SVC)
-svm.setC(2.67)
-svm.setGamma(5.383)
-svm.train(imgtrain,imgtrainlabel)
-svm.save('svm_data.dat')
+if(__name__=="__main__"):
+    train_data=cv.ml.TrainData_create(imgtrain,cv.ml.ROW_SAMPLE,imgtrainlabel)
+    svm = cv.ml.SVM_create()
+    svm.setKernel(cv.ml.SVM_LINEAR)
+    svm.setType(cv.ml.SVM_C_SVC)
+    svm.setC(2.67)
+    svm.setGamma(5.383)
+    svm.train(train_data)
+    svm.save('svm_data.dat')
