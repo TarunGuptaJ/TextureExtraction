@@ -1,2 +1,2 @@
-# Mtrl_classification
-Material classification (specialized on fabrics)
+# Cat vs Dog Detection
+Animal classification
