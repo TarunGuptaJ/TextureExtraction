@@ -35,3 +35,8 @@ if(__name__=="__main__"):
     svm.setGamma(5.383)
     svm.train(train_data)
     svm.save('svm_data.dat')
+    result = svm.predict(imgtest)
+    print(list(result),"\n",imgtestlabel)
+
+"""[0 1 0 1 0 0 0 0 1 0 1 0 0 0 0 0 0 1 0 1 0]
+   [1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 1 1 1 1 1 1]"""
