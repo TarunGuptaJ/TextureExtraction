@@ -15,7 +15,7 @@ def extract_features(image):
     return ht_mean
 
 # load the training dataset
-train_path  = "DS_resized/C_D"
+train_path  = "train"
 train_names = os.listdir(train_path)
 
 # empty list to hold feature vectors and train labels
@@ -30,7 +30,7 @@ for train_name in train_names:
     print(cur_path)
     i = 1
 
-    for file1 in glob.glob(cur_path):
+    for file1 in glob.glob(cur_path+"/*.jpeg"):
         print ("Processing Image - {} in {}".format(i, cur_label))
         # read the training image
         image = cv2.imread(file1)
@@ -61,8 +61,8 @@ print( "[STATUS] Fitting data/label to model..")
 clf_svm.fit(train_features, train_labels)
 
 # loop over the test images
-test_path = "DS_resized/test"
-for file1 in glob.glob(test_path):
+test_path = "test"
+for file1 in glob.glob(test_path+'/*jpeg'):
     # read the input image
     image = cv2.imread(file1)
 
@@ -74,11 +74,13 @@ for file1 in glob.glob(test_path):
 
     # evaluate the model and predict label
     prediction = clf_svm.predict(features.reshape(1, -1))[0]
+    
 
     # show the label
     cv2.putText(image, prediction, (20,30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0,255,255), 3)
     print( "Prediction - {}".format(prediction))
 
     # display the output image
-    cv2.imshow("Test_Image", image)
+    cv2.imshow("WinNAme",image)
     cv2.waitKey(0)
+    
